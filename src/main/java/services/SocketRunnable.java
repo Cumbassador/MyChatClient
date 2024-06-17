@@ -3,8 +3,7 @@ package services;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+
 import java.net.Socket;
 @RequiredArgsConstructor
 public class SocketRunnable  implements Runnable{
