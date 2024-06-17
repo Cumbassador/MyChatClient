@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService{
                 System.out.println("Введите сообщение.");
             String consoleMessege = messegeInputService.getMessege();
                 if ("Exit".equalsIgnoreCase(consoleMessege)) {
-                    break; // Выходим из цикла, если введено 'Exit'
+                    break;
                 }
 
             serverWriter.println(consoleMessege);
