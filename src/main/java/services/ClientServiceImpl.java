@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ClientServiceImpl implements ClientService{
     public final static int PORT = 8081;
@@ -19,31 +20,46 @@ public class ClientServiceImpl implements ClientService{
 
             PrintWriter serverWriter = new PrintWriter(socket.getOutputStream());
 
-            MessegeInputService messegeInputService = new MessegeInputServiceImpl(System.in);
-            System.out.println("Введите свой логин:");
-            String login = messegeInputService.getMessege();
+            Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Введите свой пароль:");
-            String password = messegeInputService.getMessege();
+            while (true) {
+                System.out.println("Выберите действие:\n1. Авторизация\n2. Регистрация");
+                String choice = scanner.nextLine();
 
-            //!autho!lohin:password
-            serverWriter.println("!autho!" + login + ":" + password);
-            serverWriter.flush();
+                if (choice.equals("1")) {
+                    System.out.println("Введите свой логин:");
+                    String login = scanner.nextLine();
 
-            while (true){
-                System.out.println("Введите сообщение.");
-            String consoleMessege = messegeInputService.getMessege();
-                if ("Exit".equalsIgnoreCase(consoleMessege)) {
+                    System.out.println("Введите свой пароль:");
+                    String password = scanner.nextLine();
+
+                    serverWriter.println("!autho!" + login + ":" + password);
+                    serverWriter.flush();
                     break;
-                }
 
-            serverWriter.println(consoleMessege);
-            serverWriter.flush();
+                } else if (choice.equals("2")) {
+                    System.out.println("Введите логин для регистрации:");
+                    String login = scanner.nextLine();
+
+                    System.out.println("Введите пароль для регистрации:");
+                    String password = scanner.nextLine();
+
+                    serverWriter.println("!register!" + login + ":" + password);
+                    serverWriter.flush();
+                    break;
+
+                } else {
+                    System.out.println("Некорректный выбор, попробуйте снова.");
+                }
             }
 
+            while (true) {
+                System.out.println("Введите сообщение:");
+                String consoleMessage = scanner.nextLine();
 
-
-
+                serverWriter.println(consoleMessage);
+                serverWriter.flush();
+            }
         }
 
 
